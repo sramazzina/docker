@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# cd /usr/pentaho/data-integration
+# sudo -H -u pentaho ./carte.sh ./config/carte-config.xml
+

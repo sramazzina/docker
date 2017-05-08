@@ -1,0 +1,10 @@
+#!/bin/bash
+
+
+if [ ! -f /usr/pentaho/.pdinode_configured ]; then
+        cd /usr/pentaho/data-integration/utils
+        sudo -u pentaho ./instantiate_templates.sh
+	touch /usr/pentaho/.pdinode_configured
+fi;
+
+
