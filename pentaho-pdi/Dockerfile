@@ -26,7 +26,8 @@ COPY ./dist/pdi-ce-${PDI_REL}.zip ${PENTAHO_HOME}
 
 RUN unzip ${PENTAHO_HOME}/pdi-ce-${PDI_REL}.zip -d ${PENTAHO_HOME}  && \
     rm ${PENTAHO_HOME}/pdi-ce-${PDI_REL}.zip && \
-    sed "s/,pentaho-metaverse,pdi-dataservice,pdi-data-refinery//g" ${PDI_HOME}/system/karaf/etc/org.apache.karaf.features.cfg > ${PDI_HOME}/system/karaf/etc/org.apache.karaf.features.cfg.1 && \
+#    sed "s/,pentaho-metaverse,pdi-dataservice,pdi-data-refinery//g" ${PDI_HOME}/system/karaf/etc/org.apache.karaf.features.cfg > ${PDI_HOME}/system/karaf/etc/org.apache.karaf.features.cfg.1 && \
+    sed "s/,pdi-data-refinery//g" ${PDI_HOME}/system/karaf/etc/org.apache.karaf.features.cfg > ${PDI_HOME}/system/karaf/etc/org.apache.karaf.features.cfg.1 && \
     mv ${PDI_HOME}/system/karaf/etc/org.apache.karaf.features.cfg ${PDI_HOME}/system/karaf/etc/org.apache.karaf.features.cfg.ori && \
     mv ${PDI_HOME}/system/karaf/etc/org.apache.karaf.features.cfg.1 ${PDI_HOME}/system/karaf/etc/org.apache.karaf.features.cfg
 

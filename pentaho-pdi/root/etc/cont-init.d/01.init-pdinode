@@ -5,7 +5,7 @@ echo "PDI_HOME: $PDI_HOME"
 if [ ! -f $PDI_HOME/.pdinode_configured ]; then
         cd $PDI_HOME/utils
         sudo -u pentaho ./instantiate_templates.sh
-	sudo -u touch $PDI_HOME/.pdinode_configured
+	sudo -u pentaho touch $PDI_HOME/.pdinode_configured
 fi;
 
 
