@@ -1,10 +1,11 @@
-#!/bin/bash
+#!/usr/bin/with-contenv sh
 
+echo "PDI_HOME: $PDI_HOME"
 
-if [ ! -f /usr/pentaho/.pdinode_configured ]; then
-        cd /usr/pentaho/data-integration/utils
+if [ ! -f $PDI_HOME/.pdinode_configured ]; then
+        cd $PDI_HOME/utils
         sudo -u pentaho ./instantiate_templates.sh
-	touch /usr/pentaho/.pdinode_configured
+	sudo -u touch $PDI_HOME/.pdinode_configured
 fi;
 
 

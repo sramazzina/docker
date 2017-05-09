@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv sh
 
 set -e
 
@@ -34,7 +34,7 @@ echo "=> Modifying carte ${MASTER_USER} user passwords to ${PASS}"
 echo "=================================================================================="
 echo
 
-cd /usr/pentaho/data-integration
+cd $PDI_HOME
 
 if [ "$IS_CARTE_SERVER" = "Y" ]; then
     if [ "$CONFIGURE_AS_MASTER" = "Y" ]; then
@@ -59,7 +59,8 @@ if [ "$IS_CARTE_SERVER" = "Y" ]; then
         sed -i 's/@@MASTER_PWD@@/'${MASTER_PWD}'/g' ./config/carte-config.xml
         sed -i 's/@@SLAVE_REPORT_MASTER@@/'${SLAVE_REPORT_MASTER}'/g' ./config/carte-config.xml
     fi
+    touch $PDI_HOME/.pdi_is_carte_server
 fi
 
 echo "Pentaho PDI containerized installation templates processed successfully!"
-touch /usr/pentaho/.all_templates_processed
+touch $PDI_HOME/.all_templates_processed
