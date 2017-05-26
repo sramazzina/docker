@@ -2,10 +2,31 @@
 
 echo "BASERVER_HOME: $BASERVER_HOME"
 
-if [ ! -f $BASERVER_HOME/.baserver_configured ]; then
+STANDALONE=${IS_STANDALONE:-"Y"}
 
-  # sudo -u pentaho $BASERVER_HOME/utils/init_pentaho_db.sh
-  # sudo -u pentaho $BASERVER_HOME/utils/instantiate_templates.sh
-  sudo -u pentaho touch $BASERVER_HOME/.baserver_configured
-  
+echo "STANDALONE: $STANDALONE"
+
+if [ ! -f $BASERVER_HOME/.baserver_configured ]; then
+   if [ "$STANDALONE" = "N" ]; then
+      echo "Processing $STANDALONE = N" 
+      sudo -u pentaho cp $BASERVER_HOME/other/db/$PENTAHO_DB_TYPE/create_jcr_$PENTAHO_DB_TYPE.sql $BASERVER_HOME/data/$PENTAHO_DB_TYPE/create_jcr_$PENTAHO_DB_TYPE.sql
+      sudo -u pentaho cp $BASERVER_HOME/other/db/$PENTAHO_DB_TYPE/create_quartz_$PENTAHO_DB_TYPE.sql $BASERVER_HOME/data/$PENTAHO_DB_TYPE/create_quartz_$PENTAHO_DB_TYPE.sql
+      sudo -u pentaho cp $BASERVER_HOME/other/db/$PENTAHO_DB_TYPE/create_repository_$PENTAHO_DB_TYPE.sql $BASERVER_HOME/data/$PENTAHO_DB_TYPE/create_repository_$PENTAHO_DB_TYPE.sql
+      sudo -u pentaho cp $BASERVER_HOME/other/db/dummy_quartz_table.sql $BASERVER_HOME/data/postgresql/dummy_quartz_table.sql
+
+      sudo -u pentaho cp $BASERVER_HOME/other/pentaho/system/$PENTAHO_DB_TYPE/applicationContext-spring-security-hibernate.properties $BASERVER_HOME/pentaho-solutions/system/applicationContext-spring-security-hibernate.properties
+      sudo -u pentaho cp $BASERVER_HOME/other/pentaho/system/$PENTAHO_DB_TYPE/hibernate-settings.xml $BASERVER_HOME/pentaho-solutions/system/hibernate/hibernate-settings.xml
+      sudo -u pentaho cp $BASERVER_HOME/other/pentaho/system/$PENTAHO_DB_TYPE/quartz.properties $BASERVER_HOME/pentaho-solutions/system/quartz/quartz.properties
+      sudo -u pentaho cp $BASERVER_HOME/other/pentaho/system/$PENTAHO_DB_TYPE/repository.xml $BASERVER_HOME/pentaho-solutions/system/jackrabbit/repository.xml
+      sudo -u pentaho cp $BASERVER_HOME/other/pentaho/system/$PENTAHO_DB_TYPE/postgresql.hibernate.cfg.xml $BASERVER_HOME/pentaho-solutions/system/hibernate/postgresql.hibernate.cfg.xml
+
+      sudo -u pentaho cp $BASERVER_HOME/other/tomcat/$PENTAHO_DB_TYPE/context.xml $BASERVER_HOME/tomcat/webapps/pentaho/META-INF/context.xml
+      sudo -u pentaho cp $BASERVER_HOME/other/tomcat/web.xml $BASERVER_HOME/tomcat/webapps/pentaho/WEB-INF/
+      sudo -u pentaho $BASERVER_HOME/utils/instantiate_templates.sh
+      sudo -u pentaho $BASERVER_HOME/utils/init_pentaho_db.sh
+   else
+      echo "Processing $STANDALONE = Y"
+      sudo -u pentaho cp $BASERVER_HOME/tomcat/webapps/pentaho/WEB-INF/web.xml.standalone $BASERVER_HOME/tomcat/webapps/pentaho/WEB-INF/web.xml
+   fi;
+   sudo -u pentaho touch $BASERVER_HOME/.baserver_configured
 fi;

@@ -9,7 +9,6 @@ MAINTAINER Sergio Ramazzina, sergio.ramazzina@serasoft.it
 
 # Build arguments
 ARG BASERVER_REL
-ARG IS_STANDALONE
 
 # Set correct environment variables.
 ENV PENTAHO_HOME /usr/pentaho
@@ -18,7 +17,7 @@ ENV TOMCAT_HOME ${BASERVER_HOME}/tomcat
 ENV PLUGIN_SET marketplace,cdf,cda,cde,cgg
 
 # Set default metadata DB to postgresql
-ENV DB_TYPE postgresql
+ENV PENTAHO_DB_TYPE postgresql
 
 RUN apt-get update && \
     apt-get upgrade -f -y && \
@@ -35,19 +34,21 @@ RUN unzip -q ${PENTAHO_HOME}/pentaho-server-${BASERVER_REL}.zip -d ${PENTAHO_HOM
 
 # Add all files needed to properly initialize the container
 COPY utils ${BASERVER_HOME}/utils
-#COPY other/db/${DB_TYPE}/create_jcr_${DB_TYPE}.sql ${BASERVER_HOME}/data/${DB_TYPE}/create_jcr_${DB_TYPE}.sql
-#COPY other/db/${DB_TYPE}/create_quartz_${DB_TYPE}.sql ${BASERVER_HOME}/data/${DB_TYPE}/create_quartz_${DB_TYPE}.sql
-#COPY other/db/${DB_TYPE}/create_repository_${DB_TYPE}.sql ${BASERVER_HOME}/data/${DB_TYPE}/create_repository_${DB_TYPE}.sql
+COPY other ${BASERVER_HOME}/other
+
+#COPY other/db/${PENTAHO_DB_TYPE}/create_jcr_${PENTAHO_DB_TYPE}.sql ${BASERVER_HOME}/data/${PENTAHO_DB_TYPE}/create_jcr_${PENTAHO_DB_TYPE}.sql
+#COPY other/db/${PENTAHO_DB_TYPE}/create_quartz_${PENTAHO_DB_TYPE}.sql ${BASERVER_HOME}/data/${PENTAHO_DB_TYPE}/create_quartz_${PENTAHO_DB_TYPE}.sql
+#COPY other/db/${PENTAHO_DB_TYPE}/create_repository_${PENTAHO_DB_TYPE}.sql ${BASERVER_HOME}/data/${PENTAHO_DB_TYPE}/create_repository_${PENTAHO_DB_TYPE}.sql
 #COPY ./other/db/dummy_quartz_table.sql ${BASERVER_HOME}/data/postgresql/dummy_quartz_table.sql
 
-#COPY other/pentaho/system/${DB_TYPE}/applicationContext-spring-security-hibernate.properties ${BASERVER_HOME}/pentaho-solutions/system/applicationContext-spring-security-hibernate.properties
-#COPY other/pentaho/system/${DB_TYPE}/hibernate-settings.xml ${BASERVER_HOME}/pentaho-solutions/system/hibernate/hibernate-settings.xml
-#COPY other/pentaho/system/${DB_TYPE}/quartz.properties ${BASERVER_HOME}/pentaho-solutions/system/quartz/quartz.properties
-#COPY other/pentaho/system/${DB_TYPE}/repository.xml ${BASERVER_HOME}/pentaho-solutions/system/jackrabbit/repository.xml
-#COPY other/pentaho/system/${DB_TYPE}/postgresql.hibernate.cfg.xml ${BASERVER_HOME}/pentaho-solutions/system/hibernate/postgresql.hibernate.cfg.xml
+#COPY other/pentaho/system/${PENTAHO_DB_TYPE}/applicationContext-spring-security-hibernate.properties ${BASERVER_HOME}/pentaho-solutions/system/applicationContext-spring-security-hibernate.properties
+#COPY other/pentaho/system/${PENTAHO_DB_TYPE}/hibernate-settings.xml ${BASERVER_HOME}/pentaho-solutions/system/hibernate/hibernate-settings.xml
+#COPY other/pentaho/system/${PENTAHO_DB_TYPE}/quartz.properties ${BASERVER_HOME}/pentaho-solutions/system/quartz/quartz.properties
+#COPY other/pentaho/system/${PENTAHO_DB_TYPE}/repository.xml ${BASERVER_HOME}/pentaho-solutions/system/jackrabbit/repository.xml
+#COPY other/pentaho/system/${PENTAHO_DB_TYPE}/postgresql.hibernate.cfg.xml ${BASERVER_HOME}/pentaho-solutions/system/hibernate/postgresql.hibernate.cfg.xml
 
-#COPY other/tomcat/${DB_TYPE}/context.xml ${BASERVER_HOME}/tomcat/webapps/pentaho/META-INF/context.xml
-#COPY other/tomcat/web.xml ${BASERVER_HOME}/tomcat/webapps/pentaho/WEB-INF/web.xml
+#COPY other/tomcat/${PENTAHO_DB_TYPE}/context.xml ${BASERVER_HOME}/tomcat/webapps/pentaho/META-INF/context.xml
+#COPY other/tomcat/web* ${BASERVER_HOME}/tomcat/webapps/pentaho/WEB-INF/
 
 RUN chown -Rf pentaho:pentaho ${BASERVER_HOME}
 
