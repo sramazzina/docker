@@ -31,25 +31,25 @@ RUN unzip -q ${PENTAHO_HOME}/pentaho-server-${BASERVER_REL}.zip -d ${PENTAHO_HOM
     rm ${PENTAHO_HOME}/pentaho-server-${BASERVER_REL}.zip && \
     rm ${BASERVER_HOME}/promptuser.sh && \
     # Disable daemon mode for Tomcat so that docker logs works properly
-    sed -i -e 's/\(exec ".*"\) start/\1 run/' ${TOMCAT_HOME}/bin/startup.sh && \
-    # Set password to generated value
-    chown -Rf pentaho:pentaho ${PENTAHO_HOME}
+    sed -i -e 's/\(exec ".*"\) start/\1 run/' ${TOMCAT_HOME}/bin/startup.sh
 
 # Add all files needed to properly initialize the container
-COPY utils ${PENTAHO_HOME}/biserver-ce/utils
-COPY other/db/${DB_TYPE}/create_jcr_${DB_TYPE}.sql ${BASERVER_HOME}/data/${DB_TYPE}/create_jcr_${DB_TYPE}.sql
-COPY other/db/${DB_TYPE}/create_quartz_${DB_TYPE}.sql ${BASERVER_HOME}/data/${DB_TYPE}/create_quartz_${DB_TYPE}.sql
-COPY other/db/${DB_TYPE}/create_repository_${DB_TYPE}.sql ${BASERVER_HOME}/data/${DB_TYPE}/create_repository_${DB_TYPE}.sql
-COPY ./other/db/dummy_quartz_table.sql ${BASERVER_HOME}/data/postgresql/dummy_quartz_table.sql
+COPY utils ${BASERVER_HOME}/utils
+#COPY other/db/${DB_TYPE}/create_jcr_${DB_TYPE}.sql ${BASERVER_HOME}/data/${DB_TYPE}/create_jcr_${DB_TYPE}.sql
+#COPY other/db/${DB_TYPE}/create_quartz_${DB_TYPE}.sql ${BASERVER_HOME}/data/${DB_TYPE}/create_quartz_${DB_TYPE}.sql
+#COPY other/db/${DB_TYPE}/create_repository_${DB_TYPE}.sql ${BASERVER_HOME}/data/${DB_TYPE}/create_repository_${DB_TYPE}.sql
+#COPY ./other/db/dummy_quartz_table.sql ${BASERVER_HOME}/data/postgresql/dummy_quartz_table.sql
 
-COPY other/pentaho/system/${DB_TYPE}/applicationContext-spring-security-hibernate.properties ${BASERVER_HOME}/pentaho-solutions/system/applicationContext-spring-security-hibernate.properties
-COPY other/pentaho/system/${DB_TYPE}/hibernate-settings.xml ${BASERVER_HOME}/pentaho-solutions/system/hibernate/hibernate-settings.xml
-COPY other/pentaho/system/${DB_TYPE}/quartz.properties ${BASERVER_HOME}/pentaho-solutions/system/quartz/quartz.properties
-COPY other/pentaho/system/${DB_TYPE}/repository.xml ${BASERVER_HOME}/pentaho-solutions/system/jackrabbit/repository.xml
-COPY other/pentaho/system/${DB_TYPE}/postgresql.hibernate.cfg.xml ${BASERVER_HOME}/pentaho-solutions/system/hibernate/postgresql.hibernate.cfg.xml
+#COPY other/pentaho/system/${DB_TYPE}/applicationContext-spring-security-hibernate.properties ${BASERVER_HOME}/pentaho-solutions/system/applicationContext-spring-security-hibernate.properties
+#COPY other/pentaho/system/${DB_TYPE}/hibernate-settings.xml ${BASERVER_HOME}/pentaho-solutions/system/hibernate/hibernate-settings.xml
+#COPY other/pentaho/system/${DB_TYPE}/quartz.properties ${BASERVER_HOME}/pentaho-solutions/system/quartz/quartz.properties
+#COPY other/pentaho/system/${DB_TYPE}/repository.xml ${BASERVER_HOME}/pentaho-solutions/system/jackrabbit/repository.xml
+#COPY other/pentaho/system/${DB_TYPE}/postgresql.hibernate.cfg.xml ${BASERVER_HOME}/pentaho-solutions/system/hibernate/postgresql.hibernate.cfg.xml
 
-COPY other/tomcat/${DB_TYPE}/context.xml ${BASERVER_HOME}/tomcat/webapps/pentaho/META-INF/context.xml
-COPY other/tomcat/web.xml ${BASERVER_HOME}/tomcat/webapps/pentaho/WEB-INF/web.xml
+#COPY other/tomcat/${DB_TYPE}/context.xml ${BASERVER_HOME}/tomcat/webapps/pentaho/META-INF/context.xml
+#COPY other/tomcat/web.xml ${BASERVER_HOME}/tomcat/webapps/pentaho/WEB-INF/web.xml
+
+RUN chown -Rf pentaho:pentaho ${BASERVER_HOME}
 
 ADD root /
 

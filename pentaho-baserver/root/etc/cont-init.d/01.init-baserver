@@ -4,8 +4,8 @@ echo "BASERVER_HOME: $BASERVER_HOME"
 
 if [ ! -f $BASERVER_HOME/.baserver_configured ]; then
 
-	sudo -u pentaho $BASERVER_HOME/utils/init_pentaho_db.sh
-  sudo -u pentaho $BASERVER_HOME/utils/instantiate_templates.sh
+  # sudo -u pentaho $BASERVER_HOME/utils/init_pentaho_db.sh
+  # sudo -u pentaho $BASERVER_HOME/utils/instantiate_templates.sh
   sudo -u pentaho touch $BASERVER_HOME/.baserver_configured
   
 fi;

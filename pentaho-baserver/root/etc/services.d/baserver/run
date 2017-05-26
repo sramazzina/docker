@@ -1,8 +1,7 @@
 #!/usr/bin/with-contenv sh
 
-#if [ -f $PDI_HOME/.pdi_is_carte_server ]; then
-#   cd $PDI_HOME
-#   sudo -u pentaho ./carte.sh ./config/carte-config.xml
-
-#fi;
+if [ -f $BASERVER_HOME/.baserver_configured ]; then
+   cd $BASERVER_HOME
+   sudo -u pentaho ./start-pentaho.sh
+fi;
 
