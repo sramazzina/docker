@@ -1,0 +1,22 @@
+
+version: '2'
+
+services:
+  postgres-db:
+    image: postgres:9.6
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+  baserver:
+    image: serasoft/pentaho-baserver:7.1.0.0-12
+    ports:
+      - "8080:8080"
+    restart: always
+    environment:
+      - IS_STANDALONE=N
+      - PENTAHO_DB_ADDR=postgres-db
+      - PENTAHO_DB_TYPE=postgresql
+    depends_on:
+      - postgres-db
+
