@@ -1,0 +1,21 @@
+
+version: '2'
+
+services:
+  mysql-db:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+  baserver:
+    image: serasoft/pentaho-baserver:7.1.0.0-12
+    ports:
+      - "8080:8080"
+    restart: always
+    environment:
+      - IS_STANDALONE=N
+      - PENTAHO_DB_ADDR=mysql-db
+      - PENTAHO_DB_TYPE=mysql
+    depends_on:
+      - mysql-db

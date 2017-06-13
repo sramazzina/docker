@@ -4,4 +4,3 @@ if [ -f $BASERVER_HOME/.baserver_configured ]; then
    cd $BASERVER_HOME
    sudo -u pentaho ./start-pentaho.sh
 fi;
-
