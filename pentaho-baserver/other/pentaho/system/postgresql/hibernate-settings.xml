@@ -2,17 +2,17 @@
 <settings>
 
   <!--
-  * This setting allows the deployment to specify where to find the 
+  * This setting allows the deployment to specify where to find the
   * database-specific hibernate configuration. The samples supplied
   * include the following:
-  * 
+  *
   * system/hibernate/hsql.hibernate.cfg.xml
   * system/hibernate/mysql5.hibernate.cfg.xml
   * system/hibernate/postgresql.hibernate.cfg.xml
   * system/hibernate/oracle10g.hibernate.cfg.xml
   *
   -->
-    <config-file>system/hibernate/postgresql.hibernate.cfg.xml</config-file>
+    <config-file>system/hibernate/postgres.hibernate.cfg.xml</config-file>
 
   <!--
   *

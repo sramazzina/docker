@@ -80,3 +80,4 @@ services:
 ```
 docker-compose -f ./compose/mysql/docker-compose.yml up -d
 ```
+TO DO with MySQL -> Upgrade MySQL driver

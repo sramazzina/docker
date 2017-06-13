@@ -9,12 +9,13 @@ echo "STANDALONE: $STANDALONE"
 if [ ! -f $BASERVER_HOME/.baserver_configured ]; then
    if [ "$STANDALONE" = "N" ]; then
       echo "Processing $STANDALONE = N"
+      sudo -u pentaho mv $BASERVER_HOME/data/mysql5 $BASERVER_HOME/data/mysql
       sudo -u pentaho cp $BASERVER_HOME/other/db/$PENTAHO_DB_TYPE/* $BASERVER_HOME/data/$PENTAHO_DB_TYPE
       sudo -u pentaho cp $BASERVER_HOME/other/pentaho/system/$PENTAHO_DB_TYPE/applicationContext-spring-security-hibernate.properties $BASERVER_HOME/pentaho-solutions/system/applicationContext-spring-security-hibernate.properties
       sudo -u pentaho cp $BASERVER_HOME/other/pentaho/system/$PENTAHO_DB_TYPE/hibernate-settings.xml $BASERVER_HOME/pentaho-solutions/system/hibernate/hibernate-settings.xml
       sudo -u pentaho cp $BASERVER_HOME/other/pentaho/system/$PENTAHO_DB_TYPE/quartz.properties $BASERVER_HOME/pentaho-solutions/system/quartz/quartz.properties
       sudo -u pentaho cp $BASERVER_HOME/other/pentaho/system/$PENTAHO_DB_TYPE/repository.xml $BASERVER_HOME/pentaho-solutions/system/jackrabbit/repository.xml
-      sudo -u pentaho cp $BASERVER_HOME/other/pentaho/system/$PENTAHO_DB_TYPE/postgresql.hibernate.cfg.xml $BASERVER_HOME/pentaho-solutions/system/hibernate/postgresql.hibernate.cfg.xml
+      sudo -u pentaho cp $BASERVER_HOME/other/pentaho/system/$PENTAHO_DB_TYPE/$PENTAHO_DB_TYPE.hibernate.cfg.xml $BASERVER_HOME/pentaho-solutions/system/hibernate/$PENTAHO_DB_TYPE.hibernate.cfg.xml
 
       sudo -u pentaho cp $BASERVER_HOME/other/tomcat/$PENTAHO_DB_TYPE/context.xml $BASERVER_HOME/tomcat/webapps/pentaho/META-INF/context.xml
       sudo -u pentaho cp $BASERVER_HOME/other/tomcat/web.xml $BASERVER_HOME/tomcat/webapps/pentaho/WEB-INF/web.xml

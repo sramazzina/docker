@@ -38,9 +38,6 @@ sed -i 's/@@DB_PORT@@/'${DB_PORT}'/g' `find $BASERVER_HOME/pentaho-solutions/sys
 sed -i 's/@@DB_PORT@@/'${DB_PORT}'/g' `find $BASERVER_HOME/pentaho-solutions/system -name '*.xml'`
 sed -i 's/@@DB_PORT@@/'${DB_PORT}'/g' `find $BASERVER_HOME/tomcat/webapps -name '*.xml'`
 
-DB_HOST=${PENTAHO_DB_ADDR:-'localhost'}
-DB_PORT=${PENTAHO_DB_PORT:-5432}
-
 echo "Referenced Postgres Host - Host: ${DB_HOST}, Port: ${DB_PORT}"
 
 $BASERVER_HOME/utils/wait-for-postgres.sh $DB_HOST
