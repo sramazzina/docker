@@ -39,4 +39,4 @@ RUN chown -Rf pentaho:pentaho ${BASERVER_HOME}
 
 ADD root /
 
-EXPOSE 8080
+#EXPOSE 8080

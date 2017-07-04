@@ -15,8 +15,11 @@ if [ ! -f $BASERVER_HOME/.baserver_configured ]; then
       sudo -u pentaho cp $BASERVER_HOME/other/pentaho/system/$PENTAHO_DB_TYPE/hibernate-settings.xml $BASERVER_HOME/pentaho-solutions/system/hibernate/hibernate-settings.xml
       sudo -u pentaho cp $BASERVER_HOME/other/pentaho/system/$PENTAHO_DB_TYPE/quartz.properties $BASERVER_HOME/pentaho-solutions/system/quartz/quartz.properties
       sudo -u pentaho cp $BASERVER_HOME/other/pentaho/system/$PENTAHO_DB_TYPE/repository.xml $BASERVER_HOME/pentaho-solutions/system/jackrabbit/repository.xml
+      if [ ! "$PENTAHO_DB_TYPE" = "postgresql" ]; then
       sudo -u pentaho cp $BASERVER_HOME/other/pentaho/system/$PENTAHO_DB_TYPE/$PENTAHO_DB_TYPE.hibernate.cfg.xml $BASERVER_HOME/pentaho-solutions/system/hibernate/$PENTAHO_DB_TYPE.hibernate.cfg.xml
-
+      else 
+      sudo -u pentaho cp $BASERVER_HOME/other/pentaho/system/$PENTAHO_DB_TYPE/postgres.hibernate.cfg.xml $BASERVER_HOME/pentaho-solutions/system/hibernate/postgres.hibernate.cfg.xml
+      fi;
       sudo -u pentaho cp $BASERVER_HOME/other/tomcat/$PENTAHO_DB_TYPE/context.xml $BASERVER_HOME/tomcat/webapps/pentaho/META-INF/context.xml
       sudo -u pentaho cp $BASERVER_HOME/other/tomcat/web.xml $BASERVER_HOME/tomcat/webapps/pentaho/WEB-INF/web.xml
       echo "Executing $BASERVER_HOME/utils/init_pentaho_$PENTAHO_DB_TYPE.sh to init Pentaho BA Server container"

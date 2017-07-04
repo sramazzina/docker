@@ -38,6 +38,20 @@ sed -i 's/@@DB_PORT@@/'${DB_PORT}'/g' `find $BASERVER_HOME/pentaho-solutions/sys
 sed -i 's/@@DB_PORT@@/'${DB_PORT}'/g' `find $BASERVER_HOME/pentaho-solutions/system -name '*.xml'`
 sed -i 's/@@DB_PORT@@/'${DB_PORT}'/g' `find $BASERVER_HOME/tomcat/webapps -name '*.xml'`
 
+if [ ! "$PENTAHO_FQN" = "" ]; then
+   
+echo "=> Overriding server FQN to ${PENTAHO_FQN}"
+sed -i 's#http://localhost:8080#'${PENTAHO_FQN}'#g' $BASERVER_HOME/pentaho-solutions/system/server.properties
+
+fi; 
+
+if [ ! "$PENTAHO_PORT" = "" ]; then
+
+echo "=> Overriding internal server HTTP port to ${PENTAHO_PORT}"
+sed -i 's#8080#'${PENTAHO_PORT}'#g' $BASERVER_HOME/tomcat/conf/server.xml
+
+fi;
+
 echo "Referenced Postgres Host - Host: ${DB_HOST}, Port: ${DB_PORT}"
 
 $BASERVER_HOME/utils/wait-for-postgres.sh $DB_HOST
