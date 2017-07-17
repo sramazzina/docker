@@ -22,6 +22,7 @@ RUN apt-get update && \
 
 COPY /other/jobscheduler_install.xml /tmp/other/jobscheduler_install.xml
 COPY /other/wait-for-postgres.sh ${SCHEDULER_HOME}/wait-for-postgres.sh
+COPY /other/pg_setup.sql ${SCHEDULER_HOME}/pg_setup.sql
 
 ADD root /
 
