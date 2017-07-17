@@ -16,7 +16,7 @@ ENV SCHEDULER_HOME /opt/jobscheduler
 
 RUN apt-get update && \
     apt-get upgrade -f -y && \
-    apt-get install -f -y wget zip pwgen && \
+    apt-get install -f -y wget zip pwgen postgresql-client && \
     wget https://downloads.sourceforge.net/project/jobscheduler/JobScheduler.${BASE_SOS_REL}/JobScheduler.${BASE_SOS_REL}.${MINOR_REL}/jobscheduler_linux-x64.${BASE_SOS_REL}.${MINOR_REL}.tar.gz -O /tmp/jobscheduler_linux-x64.${BASE_SOS_REL}.${MINOR_REL}.tar.gz && \
     cd /tmp && tar -xvzf jobscheduler_linux-x64.${BASE_SOS_REL}.${MINOR_REL}.tar.gz && rm ./jobscheduler_linux-x64.${BASE_SOS_REL}.${MINOR_REL}.tar.gz
 

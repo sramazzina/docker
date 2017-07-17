@@ -14,8 +14,8 @@ services:
       - "5432:5432"
     environment:
       - POSTGRES_PASSWORD=postgres
-  adempiere:
-    image: jobscheduler-sos:latest
+  jobscheduler:
+    image: jobscheduler:latest
     ports:
       - "40444:40444"
       - "48444:48444"
