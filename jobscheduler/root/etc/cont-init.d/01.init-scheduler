@@ -9,16 +9,23 @@ SMTPUSERPWD=${SMTP_USER_PWD:-""}
 MAILFROMADDR=${MAIL_FROM_ADDR:-""}
 MAILTOADDRS=${MAIL_TO_ADDRS:-""}
 
-DBHOST=${DB_HOST:-""}
-DBPORT=${DB_PORT:-""}
-DBSCHEMA=${DB_SCHEMA:-""}
-DBUSER=${DB_USER:-""}
-DBUSERPWD=${DB_USER_PWD:-""}
+DBHOST=${DB_HOST:-"postgres-db"}
+DBPORT=${DB_PORT:-"5432"}
+DBSCHEMA=${DB_SCHEMA:-"jobscheduler"}
+DBUSER=${DB_USER:-"jobscheduler_usr"}
+DBUSERPWD=${DB_USER_PWD:-$(pwgen -s 12 1)}
+
+echo "=========================================================================="
+echo "Passsword for user $DBUSER: $DBUSERPWD"
+echo "=========================================================================="
 
 if [ ! -f $SCHEDULER_HOME/.jobscheduler_configured ]; then
 
-  echo "Wait for Postgres Database initialization"
-  $SCHEDULER_HOME/wait-for-postgres.sh postgres-db
+  echo "$DBHOST:5432:postgres:postgres:postgres" > /root/.pgpass
+  echo "$DBHOST:5432:$DBSCHEMA:$DBUSER:$DBUSERPWD" >> /root/.pgpass
+
+  echo "Wait for Postgres Database initialization - DB Host: $DBHOST, DB Port: $DBPORT, DB Schema: $DBSCHEMA"
+  $SCHEDULER_HOME/wait-for-postgres.sh $DBHOST $DBPORT
 
   sed -i -e "s/@@MAIL_SERVER@@/$MAILSERVER/g" /tmp/other/jobscheduler_install.xml
   sed -i -e "s/@@SMTP_USER@@/$SMTPUSER/g" /tmp/other/jobscheduler_install.xml
@@ -30,6 +37,12 @@ if [ ! -f $SCHEDULER_HOME/.jobscheduler_configured ]; then
   sed -i -e "s/@@DB_SCHEMA@@/$DBSCHEMA/g" /tmp/other/jobscheduler_install.xml
   sed -i -e "s/@@DB_USER@@/$DBUSER/g" /tmp/other/jobscheduler_install.xml
   sed -i -e "s/@@DB_USER_PWD@@/$DBUSERPWD/g" /tmp/other/jobscheduler_install.xml
+
+  sed -i -e "s/@@DB_USER@@/$DBUSER/g" $SCHEDULER_HOME/pg_setup.sql
+  sed -i -e "s/@@DB_USER_PWD@@/$DBUSERPWD/g" $SCHEDULER_HOME/pg_setup.sql
+  sed -i -e "s/@@DB_SCHEMA@@/$DBSCHEMA/g" $SCHEDULER_HOME/pg_setup.sql
+
+  psql -h $DBHOST -p $DBPORT -U postgres postgres < $SCHEDULER_HOME/pg_setup.sql
 
   cd /tmp/jobscheduler.${BASE_SOS_REL}.${MINOR_REL}
   ./setup.sh -u /tmp/other/jobscheduler_install.xml

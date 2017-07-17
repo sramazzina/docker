@@ -241,6 +241,78 @@ at the same time the terms of the chosen license agreement.
 
         </userInput>
     </com.izforge.izpack.panels.UserInputPanel>
+    <com.izforge.izpack.panels.UserInputPanel id="reportingDatabase">
+        <userInput>
+            <!-- Reporting Database Configuration
+                 NOT SUPPORTED FOR SYBASE AND DB2 -->
+
+            <!-- Set 'yes' if the JobScheduler and the Reporting database are the same.
+                 If 'yes' then further Reporting database variables are ignored. -->
+            <entry key="sameDbConnection" value="yes"/>
+
+            <!-- Choose the database management system. Supported values are 'mysql' for MySQL,
+                 'oracle' for Oracle, 'mssql' for MS SQL Server, 'pgsql' for PostgreSQL. -->
+            <entry key="reporting.databaseDbms" value=""/>
+
+        </userInput>
+    </com.izforge.izpack.panels.UserInputPanel>
+    <com.izforge.izpack.panels.UserInputPanel id="reportingDbconnection">
+        <userInput>
+            <!-- Reporting Database Configuration
+                 NOT SUPPORTED FOR SYBASE AND DB2 -->
+
+            <!-- Enter the name or ip address of the database host -->
+            <entry key="reporting.databaseHost" value=""/>
+
+            <!-- Enter the port number for the database instance. Default ports are for MySQL 3306,
+                 Oracle 1521, MS SQL Server 1433, postgreSQL 5432. -->
+            <entry key="reporting.databasePort" value=""/>
+
+            <!-- Enter the schema -->
+            <entry key="reporting.databaseSchema" value=""/>
+
+            <!-- Enter the user name for database access -->
+            <entry key="reporting.databaseUser" value=""/>
+
+            <!-- Enter the password for database access -->
+            <entry key="reporting.databasePassword" value=""/>
+
+            <!-- You have to provide the MySQL or MS SQL Server JDBC driver respectively if you selected
+                 corresponding DBMS type. For license reasons MySQL and MS SQL Server JDBC Drivers
+                 are not provided. Alternatively you can use the mariadb JDBC Driver for MySQL and the
+                 jTDS JDBC Driver for MS SQL Server which is provided. -->
+
+            <!-- You can choose between 'yes' or 'no' for using the jTDS JDBC Driver
+                 This entry affects only MS SQL Server -->
+            <entry key="reporting.connectorJTDS" value="yes"/>
+
+            <!-- You can choose between 'yes' or 'no' for using the mariadb JDBC Driver
+                 This entry affects only MySQL -->
+            <entry key="reporting.connectorMaria" value="yes"/>
+
+        </userInput>
+    </com.izforge.izpack.panels.UserInputPanel>
+    <com.izforge.izpack.panels.UserInputPanel id="reportingJdbc">
+        <userInput>
+            <!-- Reporting Database Configuration
+                 NOT SUPPORTED FOR SYBASE AND DB2 -->
+
+            <!-- Configuration for JDBC Driver
+                 This entry is only necessary if the package 'Database Support' is chosen and you
+                 selected a DBMS type MySQL or MS SQL Server in the previous
+                 <userInput> element. -->
+
+            <!-- You have to provide the MySQL or MS SQL Server JDBC driver respectively if you selected
+                 corresponding DBMS type. For license reasons MySQL and MS SQL Server JDBC Drivers are
+                 not provided. Specify the JDBC Driver source (e.g. mysql-connector-java-*.jar for MySQL,
+                 sqljdbc.jar for MS SQL Server). Alternatively you can use the mariadb JDBC Driver for
+                 MySQL and the jTDS JDBC Driver for MS SQL Server which is provided. -->
+
+            <!-- Select the path to JDBC Driver -->
+            <entry key="reporting.connector" value=""/>
+
+        </userInput>
+    </com.izforge.izpack.panels.UserInputPanel>
     <com.izforge.izpack.panels.UserInputPanel id="end">
         <userInput/>
     </com.izforge.izpack.panels.UserInputPanel>
