@@ -1,0 +1,38 @@
+#!/usr/bin/with-contenv sh
+
+echo "Going to setup JobScheduler in docker container"
+echo "SCHEDULER_HOME = $SCHEDULER_HOME"
+
+MAILSERVER=${MAIL_SERVER:-""}
+SMTPUSER=${SMTP_USER:-""}
+SMTPUSERPWD=${SMTP_USER_PWD:-""}
+MAILFROMADDR=${MAIL_FROM_ADDR:-""}
+MAILTOADDRS=${MAIL_TO_ADDRS:-""}
+
+DBHOST=${DB_HOST:-""}
+DBPORT=${DB_PORT:-""}
+DBSCHEMA=${DB_SCHEMA:-""}
+DBUSER=${DB_USER:-""}
+DBUSERPWD=${DB_USER_PWD:-""}
+
+if [ ! -f $SCHEDULER_HOME/.jobscheduler_configured ]; then
+
+  echo "Wait for Postgres Database initialization"
+  $SCHEDULER_HOME/wait-for-postgres.sh postgres-db
+
+  sed -i -e "s/@@MAIL_SERVER@@/$MAILSERVER/g" /tmp/other/jobscheduler_install.xml
+  sed -i -e "s/@@SMTP_USER@@/$SMTPUSER/g" /tmp/other/jobscheduler_install.xml
+  sed -i -e "s/@@SMTP_USER_PWD@@/$SMTPUSERPWD/g" /tmp/other/jobscheduler_install.xml
+  sed -i -e "s/@@MAIL_FROM_ADDR@@/$MAILFROMADDR/g" /tmp/other/jobscheduler_install.xml
+  sed -i -e "s/@@MAIL_TO_ADDRS@@/$MAILTOADDRS/g" /tmp/other/jobscheduler_install.xml
+  sed -i -e "s/@@DB_HOST@@/$DBHOST/g" /tmp/other/jobscheduler_install.xml
+  sed -i -e "s/@@DB_PORT@@/$DBPORT/g" /tmp/other/jobscheduler_install.xml
+  sed -i -e "s/@@DB_SCHEMA@@/$DBSCHEMA/g" /tmp/other/jobscheduler_install.xml
+  sed -i -e "s/@@DB_USER@@/$DBUSER/g" /tmp/other/jobscheduler_install.xml
+  sed -i -e "s/@@DB_USER_PWD@@/$DBUSERPWD/g" /tmp/other/jobscheduler_install.xml
+
+  cd /tmp/jobscheduler.${BASE_SOS_REL}.${MINOR_REL}
+  ./setup.sh -u /tmp/other/jobscheduler_install.xml
+
+  touch $SCHEDULER_HOME/.jobscheduler_configure;
+fi;
