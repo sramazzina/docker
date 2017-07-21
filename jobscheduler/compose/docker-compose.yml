@@ -16,10 +16,10 @@ services:
       - POSTGRES_PASSWORD=postgres
   jobscheduler:
     image: jobscheduler:latest
-    # ports:
-    #   - "40444:40444"
-    #   - "48444:48444"
-    #   - "4444:4444"
+    ports:
+       - "40444:40444"
+       - "48444:48444"
+       - "4444:4444"
     environment:
       # - MAIL_SERVER=
       # - SMTP_USER=

@@ -9,7 +9,8 @@ MAINTAINER Sergio Ramazzina, sergio.ramazzina@serasoft.it
 
 # Build arguments
 ENV BASE_SOS_REL 1.11
-ENV MINOR_REL 2
+# Chosen 1.11.1 because 1.11.2 has a bug with PostgreSQL that will be solved in 1.11.3
+ENV MINOR_REL 1
 
 # Set correct environment variables.
 ENV SCHEDULER_HOME /opt/jobscheduler
@@ -27,5 +28,6 @@ COPY /other/wait-for-postgres.sh ${SCHEDULER_HOME}/wait-for-postgres.sh
 COPY /other/pg_setup.sql ${SCHEDULER_HOME}/pg_setup.sql
 
 ADD root /
-
 EXPOSE 40444 48444 4444
+
+ENTRYPOINT ["/init"]

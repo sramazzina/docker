@@ -99,7 +99,7 @@ at the same time the terms of the chosen license agreement.
             <entry key="schedulerAllowedHost" value="0.0.0.0"/>
 
             <!-- Choose (yes or no) wether the JobScheduler should be started at the end of the installation -->
-            <entry key="launchScheduler" value="yes"/>
+            <entry key="launchScheduler" value="no"/>
 
         </userInput>
     </com.izforge.izpack.panels.UserInputPanel>

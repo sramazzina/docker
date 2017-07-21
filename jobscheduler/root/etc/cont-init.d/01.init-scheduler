@@ -3,29 +3,31 @@
 echo "Going to setup JobScheduler in docker container"
 echo "SCHEDULER_HOME = $SCHEDULER_HOME"
 
-MAILSERVER=${MAIL_SERVER:-""}
-SMTPUSER=${SMTP_USER:-""}
-SMTPUSERPWD=${SMTP_USER_PWD:-""}
-MAILFROMADDR=${MAIL_FROM_ADDR:-""}
-MAILTOADDRS=${MAIL_TO_ADDRS:-""}
-
-DBHOST=${DB_HOST:-"postgres-db"}
-DBPORT=${DB_PORT:-"5432"}
-DBSCHEMA=${DB_SCHEMA:-"jobscheduler"}
-DBUSER=${DB_USER:-"jobscheduler_usr"}
-DBUSERPWD=${DB_USER_PWD:-$(pwgen -s 12 1)}
-
-echo "=========================================================================="
-echo "Passsword for user $DBUSER: $DBUSERPWD"
-echo "=========================================================================="
 
 if [ ! -f $SCHEDULER_HOME/.jobscheduler_configured ]; then
 
+  echo "Initializing JobScheduler container..."
+
+  MAILSERVER=${MAIL_SERVER:-""}
+  SMTPUSER=${SMTP_USER:-""}
+  SMTPUSERPWD=${SMTP_USER_PWD:-""}
+  MAILFROMADDR=${MAIL_FROM_ADDR:-""}
+  MAILTOADDRS=${MAIL_TO_ADDRS:-""}
+
+  DBHOST=${DB_HOST:-"postgres-db"}
+  DBPORT=${DB_PORT:-"5432"}
+  DBSCHEMA=${DB_SCHEMA:-"jobscheduler"}
+  DBUSER=${DB_USER:-"jobscheduler_usr"}
+  DBUSERPWD=${DB_USER_PWD:-$(pwgen -s 12 1)}
+
+  echo "=========================================================================="
+  echo "Passsword for user $DBUSER: $DBUSERPWD"
+  echo "=========================================================================="
   echo "$DBHOST:5432:postgres:postgres:postgres" > /root/.pgpass
   echo "$DBHOST:5432:$DBSCHEMA:$DBUSER:$DBUSERPWD" >> /root/.pgpass
 
   echo "Wait for Postgres Database initialization - DB Host: $DBHOST, DB Port: $DBPORT, DB Schema: $DBSCHEMA"
-  $SCHEDULER_HOME/wait-for-postgres.sh $DBHOST $DBPORT
+  $SCHEDULER_HOME/wait-for-postgres.sh $DBHOST
 
   sed -i -e "s/@@MAIL_SERVER@@/$MAILSERVER/g" /tmp/other/jobscheduler_install.xml
   sed -i -e "s/@@SMTP_USER@@/$SMTPUSER/g" /tmp/other/jobscheduler_install.xml
@@ -45,7 +47,11 @@ if [ ! -f $SCHEDULER_HOME/.jobscheduler_configured ]; then
   psql -h $DBHOST -p $DBPORT -U postgres postgres < $SCHEDULER_HOME/pg_setup.sql
 
   cd /tmp/jobscheduler.${BASE_SOS_REL}.${MINOR_REL}
+
   ./setup.sh -u /tmp/other/jobscheduler_install.xml
 
-  touch $SCHEDULER_HOME/.jobscheduler_configure;
+  # Remove the -service flag to disable the daemonized option
+  sed -i -e 's/-service//g' $SCHEDULER_HOME/scheduler/bin/jobscheduler_environment_variables.sh
+
+  touch $SCHEDULER_HOME/.jobscheduler_configured;
 fi;
