@@ -1,0 +1,40 @@
+#!/usr/bin/with-contenv sh
+
+echo "Going to setup JobScheduler in docker container"
+echo "SCHEDULER_HOME = $SCHEDULER_HOME"
+
+
+if [ ! -f $SCHEDULER_HOME/.joc_configured ]; then
+
+  echo "Initializing JobScheduler JOC container..."
+
+  MAILSERVER=${MAIL_SERVER:-""}
+  SMTPUSER=${SMTP_USER:-""}
+  SMTPUSERPWD=${SMTP_USER_PWD:-""}
+  MAILFROMADDR=${MAIL_FROM_ADDR:-""}
+  MAILTOADDRS=${MAIL_TO_ADDRS:-""}
+
+  DBHOST=${DB_HOST:-"postgres-db"}
+  DBPORT=${DB_PORT:-"5432"}
+  DBSCHEMA=${DB_SCHEMA:-"jobscheduler"}
+  DBUSER=${DB_USER:-"jobscheduler_usr"}
+  DBUSERPWD=${DB_USER_PWD}
+
+
+  sed -i -e "s/@@MAIL_SERVER@@/$MAILSERVER/g" /tmp/other/joc_install.xml
+  sed -i -e "s/@@SMTP_USER@@/$SMTPUSER/g" /tmp/other/joc_install.xml
+  sed -i -e "s/@@SMTP_USER_PWD@@/$SMTPUSERPWD/g" /tmp/other/joc_install.xml
+  sed -i -e "s/@@MAIL_FROM_ADDR@@/$MAILFROMADDR/g" /tmp/other/joc_install.xml
+  sed -i -e "s/@@MAIL_TO_ADDRS@@/$MAILTOADDRS/g" /tmp/other/joc_install.xml
+  sed -i -e "s/@@DB_HOST@@/$DBHOST/g" /tmp/other/joc_install.xml
+  sed -i -e "s/@@DB_PORT@@/$DBPORT/g" /tmp/other/joc_install.xml
+  sed -i -e "s/@@DB_SCHEMA@@/$DBSCHEMA/g" /tmp/other/joc_install.xml
+  sed -i -e "s/@@DB_USER@@/$DBUSER/g" /tmp/other/joc_install.xml
+  sed -i -e "s/@@DB_USER_PWD@@/$DBUSERPWD/g" /tmp/other/joc_install.xml
+
+  cd /tmp/joc.${BASE_SOS_REL}.${MINOR_REL}
+
+  ./setup.sh /tmp/other/joc_install.xml
+
+  touch $SCHEDULER_HOME/.joc_configured;
+fi;

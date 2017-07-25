@@ -1,0 +1,54 @@
+#
+# Copyright (C) Sergio Ramazzina - Serasoft S.r.l.
+#
+# Contributors:
+# - Sergio Ramazzina - sergio.ramazzina@serasoft.it
+#
+
+version: '2'
+
+services:
+  test-postgres-db:
+    image: postgres:9.6
+    # ports:
+    #  - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+  jobscheduler:
+    image: jobscheduler:latest
+    #ports:
+    #   - "40444:40444"
+    #   - "48444:48444"
+    #   - "4444:4444"
+    environment:
+      # - MAIL_SERVER=
+      # - SMTP_USER=
+      # - SMTP_USER_PWD=
+      # - MAIL_FROM_ADDR=
+      # - MAIL_TO_ADDRS=
+      - DB_HOST=test-postgres-db
+      # - DB_PORT=5432
+      #- DB_SCHEMA=jobscheduler
+      #- DB_USER=jobscheduler
+      #- DB_USER_PWD=jobscheduler
+    restart: always
+    depends_on:
+      - test-postgres-db
+  jobscheduler-joc:
+    image: jobscheduler-joc:latest
+    ports:
+       - "4446:4446"
+    #   - "48444:48444"
+    #   - "4444:4444"
+    environment:
+      # - MAIL_SERVER=
+      # - SMTP_USER=
+      # - SMTP_USER_PWD=
+      # - MAIL_FROM_ADDR=
+      # - MAIL_TO_ADDRS=
+      - DB_HOST=localhost
+      # - DB_PORT=5432
+      # - DB_SCHEMA=jobscheduler
+      # - DB_USER=jobscheduler
+      - DB_USER_PWD=7GFnPuVdkDg9
+    restart: always

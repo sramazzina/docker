@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- 
+XML configuration file for JOC
+
+If you call the installer with this XML file then 
+you accept at the same time the terms of the 
+licence agreement under GNU GPL 2.0 License 
+(see http://www.gnu.org/licenses/gpl-2.0.html)
+-->
+<AutomatedInstallation langpack="eng">
+    <com.izforge.izpack.panels.UserInputPanel id="home">
+        <userInput/>
+    </com.izforge.izpack.panels.UserInputPanel>
+    <com.izforge.izpack.panels.HTMLLicencePanel id="gpl_licence"/>
+    <com.izforge.izpack.panels.TargetPanel id="target">
+        
+        <!-- SELECT THE INSTALLATION PATH
+             It must be absolute! 
+             For example:
+             /opt/sos-berlin.com/joc on Linux
+             C:\Program Files\sos-berlin.com\joc on Windows -->
+        <installpath>/opt/jobscheduler/joc</installpath>
+        
+    </com.izforge.izpack.panels.TargetPanel>
+    <com.izforge.izpack.panels.UserInputPanel id="jetty">
+        <userInput>
+            
+            <!-- JOC requires a servlet container such as Jetty. 
+                 If a servlet container already installed then you can use it. 
+                 Otherwise a Jetty will be installed in addition if withJettyInstall=yes.
+                 You need root permissions to install JOC with Jetty. -->
+            <entry key="withJettyInstall" value="yes"/>
+            <entry key="jettyPort" value="4446"/>
+            <!-- Only necessary for Windows -->
+            <entry key="jettyStopPort" value="40446"/>
+            <!-- Only necessary for Unix (root permissions required) -->
+            <entry key="withJocInstallAsDaemon" value="no"/>
+            <!-- Path to Jetty base directory 
+                 For example:
+                 /homer/[user]/sos-berlin.com/joc on Linux
+                 C:\ProgramData\sos-berlin.com\joc on Windows -->
+            <entry key="jettyBaseDir" value="/opt/jobscheduler/joc"/>
+            
+            <!-- Java options for Jetty. -->
+            <!-- Initial memory pool (-Xms) in MB -->
+            <entry key="jettyOptionXms" value="128"/>
+            <!-- Maximum memory pool (-Xmx) in MB -->
+            <entry key="jettyOptionXmx" value="512"/>
+            <!-- Thread stack size (-Xss) in KB -->
+            <entry key="jettyOptionXss" value="4000"/>
+            <!-- Further Java options -->
+            <entry key="jettyOptions" value=""/>
+            
+        </userInput>
+    </com.izforge.izpack.panels.UserInputPanel>
+    <com.izforge.izpack.panels.UserInputPanel id="reportingDatabase">
+        <userInput>
+            <!-- Reporting Database Configuration -->
+                 
+            <!-- Choose the database management system. Supported values are 'mysql' for MySQL,
+                 'oracle' for Oracle, 'mssql' for MS SQL Server, 'pgsql' for PostgreSQL. -->
+            <entry key="reporting.databaseDbms" value="pgsql"/>
+            
+        </userInput>
+    </com.izforge.izpack.panels.UserInputPanel>
+    <com.izforge.izpack.panels.UserInputPanel id="reportingDbconnection">
+        <userInput>
+            <!-- Reporting Database Configuration -->
+                 
+            <!-- Enter the name or ip address of the database host -->
+            <entry key="reporting.databaseHost" value="@@DB_HOST@@"/>
+            
+            <!-- Enter the port number for the database instance. Default ports are for MySQL 3306, 
+                 Oracle 1521, MS SQL Server 1433, postgreSQL 5432. -->
+            <entry key="reporting.databasePort" value="@@DB_PORT@@"/>
+            
+            <!-- Enter the schema -->
+            <entry key="reporting.databaseSchema" value="@@DB_SCHEMA@@"/>
+            
+            <!-- Enter the user name for database access -->
+            <entry key="reporting.databaseUser" value="@@DB_USER@@"/>
+            
+            <!-- Enter the password for database access -->
+            <entry key="reporting.databasePassword" value="@@DB_USER_PWD@@"/>
+            
+            <!-- You have to provide the MySQL or MS SQL Server JDBC driver respectively if you selected 
+                 corresponding DBMS type. For license reasons MySQL and MS SQL Server JDBC Drivers are 
+                 not provided. Alternatively you can use the mariadb JDBC Driver for MySQL and 
+                 the jTDS JDBC Driver for MS SQL Server which is provided. -->
+                 
+            <!-- You can choose between 'yes' or 'no' for using the jTDS JDBC Driver
+                 This entry affects only MS SQL Server -->
+            <entry key="reporting.connectorJTDS" value="yes"/>
+            
+            <!-- You can choose between 'yes' or 'no' for using the mariadb JDBC Driver
+                 This entry affects only MySQL -->
+            <entry key="reporting.connectorMaria" value="yes"/>
+            
+        </userInput>
+    </com.izforge.izpack.panels.UserInputPanel>
+    <com.izforge.izpack.panels.UserInputPanel id="reportingJdbc">
+        <userInput>
+            <!-- Reporting Database Configuration -->
+                 
+            <!-- Configuration for JDBC Driver 
+                 This entry is only necessary if you selected a DBMS type such as MySQL and 
+                 MS SQL Server in the previous <userInput> element. -->
+                 
+            <!-- You have to provide the MySQL or MS SQL Server JDBC driver respectively if you selected 
+                 corresponding DBMS type. For license reasons MySQL and MS SQL Server JDBC Drivers are 
+                 not provided. Specify the JDBC Driver source (e.g. mysql-connector-java-*.jar for MySQL, 
+                 sqljdbc.jar for MS SQL Server). Alternatively you can use the mariadb 
+                 JDBC Driver for MySQL and the jTDS JDBC Driver for MS SQL Server which is provided. -->
+                 
+            <!-- Select the path to JDBC Driver -->
+            <entry key="reporting.connector" value=""/>
+            
+        </userInput>
+    </com.izforge.izpack.panels.UserInputPanel>
+    <com.izforge.izpack.panels.UserInputPanel id="database">
+        <userInput>
+            <!-- JobScheduler Database Configuration -->
+            
+            <!-- Set 'yes' if the Reporting and the JobScheduler database are the same.
+                 If 'yes' then further JobScheduler database variables are ignored. -->
+            <entry key="sameDbConnection" value="yes"/>
+                 
+            <!-- Choose the database management system. Supported values are 'mysql' for MySQL,
+                 'oracle' for Oracle, 'mssql' for MS SQL Server, 'pgsql' for PostgreSQL,
+                 'db2' for DB2 and 'sybase' for Sybase. -->
+            <entry key="databaseDbms" value="pgsql"/>
+            
+        </userInput>
+    </com.izforge.izpack.panels.UserInputPanel>
+    <com.izforge.izpack.panels.UserInputPanel id="dbconnection">
+         <userInput>
+            <!-- JobScheduler Database Configuration -->
+                 
+            <!-- Enter the name or ip address of the database host -->
+            <entry key="databaseHost" value=""/>
+            
+            <!-- Enter the port number for the database instance. Default ports are for MySQL 3306, 
+                 Oracle 1521, MS SQL Server 1433, postgreSQL 5432, DB2 50000, Sybase 5000. -->
+            <entry key="databasePort" value=""/>
+            
+            <!-- Enter the schema -->
+            <entry key="databaseSchema" value=""/>
+            
+            <!-- Enter the user name for database access -->
+            <entry key="databaseUser" value=""/>
+            
+            <!-- Enter the password for database access -->
+            <entry key="databasePassword" value=""/>
+            
+            <!-- You have to provide the MySQL, MS SQL Server, Sybase or DB2 JDBC driver respectively if you selected 
+                 corresponding DBMS type. For license reasons MySQL, Sybase and MS SQL Server JDBC Drivers are 
+                 not provided. Alternatively you can use the mariadb JDBC Driver for MySQL and 
+                 the jTDS JDBC Driver for MS SQL Server and Sybase which is provided. -->
+                 
+            <!-- You can choose between 'yes' or 'no' for using the jTDS JDBC Driver
+                 This entry affects only MS SQL Server or Sybase -->
+            <entry key="connectorJTDS" value="yes"/>
+            
+            <!-- You can choose between 'yes' or 'no' for using the mariadb JDBC Driver
+                 This entry affects only MySQL -->
+            <entry key="connectorMaria" value="yes"/>
+            
+        </userInput>
+    </com.izforge.izpack.panels.UserInputPanel>
+    <com.izforge.izpack.panels.UserInputPanel id="jdbc">
+        <userInput>
+            <!-- JobScheduler Database Configuration -->
+                 
+            <!-- Configuration for JDBC Driver 
+                 This entry is only necessary if you selected a DBMS type such as MySQL, 
+                 MS SQL Server, Sybase ot DB2 in the previous <userInput> element. -->
+                 
+            <!-- You have to provide the MySQL, MS SQL Server, Sybase or DB2 JDBC driver respectively if you selected 
+                 corresponding DBMS type. For license reasons MySQL and MS SQL Server JDBC Drivers are 
+                 not provided. Specify the JDBC Driver source (e.g. mysql-connector-java-*.jar for MySQL, 
+                 sqljdbc.jar for MS SQL Server, jconn3.jar for Sybase). Alternatively you can use the mariadb 
+                 JDBC Driver for MySQL and the jTDS JDBC Driver for MS SQL Server and Sybase which is provided. -->
+                 
+            <!-- Select the path to JDBC Driver -->
+            <entry key="connector" value=""/>
+            
+            <!-- Only for DB2: Select the path to DB2 license file for JDBC Driver -->
+            <entry key="connectorLicense" value=""/>
+            
+        </userInput>
+    </com.izforge.izpack.panels.UserInputPanel>
+    <com.izforge.izpack.panels.UserInputPanel id="end">
+        <userInput/>
+    </com.izforge.izpack.panels.UserInputPanel>
+    <com.izforge.izpack.panels.InstallPanel id="install"/>
+    <com.izforge.izpack.panels.ProcessPanel id="process"/>
+    <com.izforge.izpack.panels.FinishPanel id="finish"/>
+</AutomatedInstallation>
