@@ -13,7 +13,7 @@ ENV BASE_SOS_REL 1.11
 ENV MINOR_REL 1
 
 # Set correct environment variables.
-ENV SCHEDULER_HOME /opt/jobscheduler-joc
+ENV SCHEDULER_HOME /opt/jobscheduler/joc
 
 RUN apt-get update && \
     apt-get upgrade -f -y && \
@@ -28,6 +28,6 @@ COPY /other/wait-for-postgres.sh ${SCHEDULER_HOME}/wait-for-postgres.sh
 
 ADD root /
 
-EXPOSE 4446 40444 48444 4444
+EXPOSE 4446
 
 ENTRYPOINT ["/init"]

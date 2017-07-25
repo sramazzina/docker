@@ -15,7 +15,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres
   jobscheduler:
-    image: jobscheduler:latest
+    image: jobscheduler:1.11.1
     #ports:
     #   - "40444:40444"
     #   - "48444:48444"
@@ -30,14 +30,15 @@ services:
       # - DB_PORT=5432
       #- DB_SCHEMA=jobscheduler
       #- DB_USER=jobscheduler
-      #- DB_USER_PWD=jobscheduler
+      - DB_USER_PWD=password
     restart: always
     depends_on:
       - test-postgres-db
+  
   jobscheduler-joc:
-    image: jobscheduler-joc:latest
+    image: jobscheduler-joc:1.11.1
     ports:
-       - "4446:4446"
+      - "4446:4446"
     #   - "48444:48444"
     #   - "4444:4444"
     environment:
@@ -46,9 +47,9 @@ services:
       # - SMTP_USER_PWD=
       # - MAIL_FROM_ADDR=
       # - MAIL_TO_ADDRS=
-      - DB_HOST=localhost
+      - DB_HOST=test-postgres-db
       # - DB_PORT=5432
       # - DB_SCHEMA=jobscheduler
       # - DB_USER=jobscheduler
-      - DB_USER_PWD=7GFnPuVdkDg9
+      - DB_USER_PWD=password
     restart: always
