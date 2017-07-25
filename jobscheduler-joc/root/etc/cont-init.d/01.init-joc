@@ -35,6 +35,7 @@ if [ ! -f $SCHEDULER_HOME/.joc_configured ]; then
   cd /tmp/joc.${BASE_SOS_REL}.${MINOR_REL}
 
   ./setup.sh /tmp/other/joc_install.xml
+  $SCHEDULER_HOME/jetty/bin/jetty.sh stop
 
-  touch $SCHEDULER_HOME/.joc_configured;
+  touch $SCHEDULER_HOME/.joc_configured
 fi;
