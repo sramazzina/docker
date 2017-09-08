@@ -79,7 +79,7 @@ at the same time the terms of the chosen license agreement.
             <!-- Network Configuration -->
 
             <!-- Enter the name or ip address of the host on which the JobScheduler is operated -->
-            <entry key="schedulerHost" value=""/>
+            <entry key="schedulerHost" value="@@SCHEDULER_HOST@@"/>
 
             <!-- Enter the port for TCP communication -->
             <entry key="schedulerPort" value="4444"/>

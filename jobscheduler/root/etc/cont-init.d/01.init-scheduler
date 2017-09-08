@@ -8,6 +8,7 @@ if [ ! -f $SCHEDULER_HOME/.jobscheduler_configured ]; then
 
   echo "Initializing JobScheduler container..."
 
+  SCHEDHOST=${SCHEDULER_HOST:-""}
   MAILSERVER=${MAIL_SERVER:-""}
   SMTPUSER=${SMTP_USER:-""}
   SMTPUSERPWD=${SMTP_USER_PWD:-""}
@@ -28,14 +29,18 @@ if [ ! -f $SCHEDULER_HOME/.jobscheduler_configured ]; then
   echo "$DBHOST:5432:postgres:postgres:$POSTGRESPWD" > /root/.pgpass
   echo "$DBHOST:5432:$DBSCHEMA:$DBUSER:$DBUSERPWD" >> /root/.pgpass
 
+  echo "Scheduler Host: $SCHEDHOST"
   echo "Wait for Postgres Database initialization - DB Host: $DBHOST, DB Port: $DBPORT, DB Schema: $DBSCHEMA"
   $SCHEDULER_HOME/wait-for-postgres.sh $DBHOST
+
+  sed -i -e "s/@@SCHEDULER_HOST@@/$SCHEDHOST/g" /tmp/other/jobscheduler_install.xml
 
   sed -i -e "s/@@MAIL_SERVER@@/$MAILSERVER/g" /tmp/other/jobscheduler_install.xml
   sed -i -e "s/@@SMTP_USER@@/$SMTPUSER/g" /tmp/other/jobscheduler_install.xml
   sed -i -e "s/@@SMTP_USER_PWD@@/$SMTPUSERPWD/g" /tmp/other/jobscheduler_install.xml
   sed -i -e "s/@@MAIL_FROM_ADDR@@/$MAILFROMADDR/g" /tmp/other/jobscheduler_install.xml
   sed -i -e "s/@@MAIL_TO_ADDRS@@/$MAILTOADDRS/g" /tmp/other/jobscheduler_install.xml
+
   sed -i -e "s/@@DB_HOST@@/$DBHOST/g" /tmp/other/jobscheduler_install.xml
   sed -i -e "s/@@DB_PORT@@/$DBPORT/g" /tmp/other/jobscheduler_install.xml
   sed -i -e "s/@@DB_SCHEMA@@/$DBSCHEMA/g" /tmp/other/jobscheduler_install.xml
