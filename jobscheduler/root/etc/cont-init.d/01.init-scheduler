@@ -19,11 +19,13 @@ if [ ! -f $SCHEDULER_HOME/.jobscheduler_configured ]; then
   DBSCHEMA=${DB_SCHEMA:-"jobscheduler"}
   DBUSER=${DB_USER:-"jobscheduler_usr"}
   DBUSERPWD=${DB_USER_PWD:-$(pwgen -s 12 1)}
+  POSTGRESPWD=${POSTGRES_PWD:-"postgres"}
 
   echo "=========================================================================="
-  echo "Passsword for user $DBUSER: $DBUSERPWD"
+  echo "Password for user $DBUSER: $DBUSERPWD"
+  echo "Password for user postgres: $POSTGRESPWD"
   echo "=========================================================================="
-  echo "$DBHOST:5432:postgres:postgres:postgres" > /root/.pgpass
+  echo "$DBHOST:5432:postgres:postgres:$POSTGRESPWD" > /root/.pgpass
   echo "$DBHOST:5432:$DBSCHEMA:$DBUSER:$DBUSERPWD" >> /root/.pgpass
 
   echo "Wait for Postgres Database initialization - DB Host: $DBHOST, DB Port: $DBPORT, DB Schema: $DBSCHEMA"
