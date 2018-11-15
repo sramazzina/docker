@@ -14,13 +14,23 @@ ARG PDI_REL
 ENV HOME /root
 ENV PENTAHO_HOME /usr/pentaho
 ENV PDI_HOME ${PENTAHO_HOME}/data-integration
+ENV DATA_VOLUME /data-volume
+ENV SCRIPT_VOLUME /etl_scripts
+ENV LOG_VOLUME /etl_logs
+
+ENV ETL_SCRIPTS_HOME ${SCRIPT_VOLUME}
+ENV ETL_LOGS_HOME ${LOG_VOLUME}
 
 # =============================== Start Image Customization ===================
 # Make sure base image is updated then install needed linux tools
 RUN apt-get update && \
-    apt-get install -y zip pwgen sudo libwebkitgtk-1.0-0 && \
+    apt-get install -y zip pwgen sudo libwebkitgtk-1.0-0 git && \
     mkdir -p ${PENTAHO_HOME} && \
-    useradd -d ${PENTAHO_HOME} pentaho
+    mkdir -p ${DATA_VOLUME} && \
+    mkdir -p ${SCRIPT_VOLUME} && \
+    mkdir -p ${LOG_VOLUME} && \
+    useradd -d ${PENTAHO_HOME} pentaho 
+     
 
 COPY ./dist/pdi-ce-${PDI_REL}.zip ${PENTAHO_HOME}
 
@@ -36,7 +46,7 @@ COPY utils ${PDI_HOME}/utils
 COPY templates ${PDI_HOME}/templates
 
 # Set password to generated value
-RUN chown -Rf pentaho:pentaho ${PENTAHO_HOME}
+RUN chown -Rf pentaho:pentaho ${PENTAHO_HOME} ${DATA_VOLUME} ${LOG_VOLUME} ${SCRIPT_HOME}
 ADD root /
 
 EXPOSE 8080
