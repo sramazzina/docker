@@ -2,10 +2,15 @@
 
 echo "PDI_HOME: $PDI_HOME"
 
-if [ ! -f $PDI_HOME/.pdinode_configured ]; then
-        cd $PDI_HOME/utils
-        sudo -u pentaho ./instantiate_templates.sh
-	sudo -u pentaho touch $PDI_HOME/.pdinode_configured
+EXEC_MODE=${EXEC_MODE:=batch}
+
+
+if [ $EXEC_MODE = "carte" ]; then
+	if [ ! -f $PDI_HOME/.pdinode_configured ]; then
+        	cd $PDI_HOME/utils
+        	sudo -u pentaho ./instantiate_templates.sh
+		sudo -u pentaho touch $PDI_HOME/.pdinode_configured
+	fi;
 fi;
 
 
