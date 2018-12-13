@@ -1,4 +1,4 @@
-FROM serasoft/debian-base:1.0.0
+FROM serasoft/debian-base:8.11
 MAINTAINER Sergio Ramazzina - sergio.ramazzina@serasoft.it
 
 # Default to UTF-8 file.encoding
