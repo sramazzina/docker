@@ -4,7 +4,7 @@
 # VERSION	1.2
 #
 
-FROM serasoft/openjdk-base:8u121
+FROM serasoft/openjdk-base:v8
 MAINTAINER Sergio Ramazzina, sergio.ramazzina@serasoft.it
 
 # Build time argument to contain the PDI release we want to build
@@ -44,6 +44,7 @@ RUN unzip ${PENTAHO_HOME}/pdi-ce-${PDI_REL}.zip -d ${PENTAHO_HOME}  && \
 # Add all files needed t properly initialize the container
 COPY utils ${PDI_HOME}/utils
 COPY templates ${PDI_HOME}/templates
+COPY ./dist/lib/*.jar ${PDI_HOME}/lib/
 
 # Set password to generated value
 RUN chown -Rf pentaho:pentaho ${PENTAHO_HOME} ${DATA_VOLUME} ${LOG_VOLUME} ${SCRIPT_HOME}
