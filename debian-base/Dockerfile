@@ -1,7 +1,7 @@
 FROM debian:8.11
 MAINTAINER Sergio Ramazzina - sergio.ramazzina@serasoft.it
 
-ENV S6_VER=v1.21.7.0
+ENV S6_VER=v1.22.1.0
 
 RUN apt-get update && \
     apt-get install -y curl pwgen && \ 
