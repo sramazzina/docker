@@ -1,4 +1,4 @@
-FROM debian:8.11
+FROM debian:9.9
 MAINTAINER Sergio Ramazzina - sergio.ramazzina@serasoft.it
 
 ENV S6_VER=v1.22.1.0
