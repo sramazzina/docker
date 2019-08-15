@@ -2,7 +2,7 @@
 
 if [ -f $PDI_HOME/.pdi_is_carte_server ]; then
    cd $PDI_HOME
-   sudo -u pentaho ./carte.sh ./config/carte-config.xml
+   exec s6-setuidgid pentaho ./carte.sh ./config/carte-config.xml
 
 fi;
 
