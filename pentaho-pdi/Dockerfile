@@ -1,7 +1,7 @@
 #
 # Serasoft's docker image for Pentaho Data Integration
 #
-# VERSION	1.2
+# VERSION	1.3
 #
 
 FROM serasoft/openjdk-base:v8
@@ -11,7 +11,6 @@ MAINTAINER Sergio Ramazzina, sergio.ramazzina@serasoft.it
 ARG PDI_REL
 
 # Set correct environment variables.
-ENV HOME /root
 ENV PENTAHO_HOME /usr/pentaho
 ENV PDI_HOME ${PENTAHO_HOME}/data-integration
 ENV DATA_VOLUME ${PENTAHO_HOME}/data-volume
@@ -26,13 +25,14 @@ ENV ETL_LOGS_HOME ${LOG_VOLUME}
 # Make sure base image is updated then install needed linux tools
 RUN apt-get update && \
     apt-get install --no-install-recommends -y zip unzip pwgen sudo libwebkitgtk-1.0-0 git && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
+    apt-get purge -y --auto-remove && \
     mkdir -p ${PENTAHO_HOME} && \
     mkdir -p ${DATA_VOLUME} && \
     mkdir -p ${SCRIPT_VOLUME} && \
-    mkdir -p ${LOG_VOLUME}    
-    ## && \
-    ## useradd -d ${PENTAHO_HOME} pentaho     
+    mkdir -p ${LOG_VOLUME}# && \
+    useradd -d ${PENTAHO_HOME} pentaho     
 
 COPY ./dist/pdi-ce-${PDI_REL}.zip ${PENTAHO_HOME}
 
@@ -58,4 +58,3 @@ COPY ./dist/lib/*.jar ${PDI_HOME}/lib/
 ADD root /
 
 EXPOSE 8080
-ENTRYPOINT ["/init"]
