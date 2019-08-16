@@ -6,9 +6,11 @@ ENV LANG=C.UTF-8 \
     JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 \
     PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH
 
-RUN  apt-get update && \
-     apt-get install --no-install-recommends -y openjdk-8-jdk-headless && \
-    rm -rf /var/lib/apt/lists/*
+RUN   apt-get update && \
+      apt-get install --no-install-recommends -y openjdk-8-jdk-headless && \
+      apt-get clean && \
+      rm -rf /var/lib/apt/lists/* && \
+      apt-get purge -y --auto-remove
 
 # add a simple script that can auto-detect the appropriate JAVA_HOME value
 # based on whether the JDK or only the JRE is installed
