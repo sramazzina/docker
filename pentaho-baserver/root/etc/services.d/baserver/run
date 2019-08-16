@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv sh
 
-if [ -f $BASERVER_HOME/.baserver_configured ]; then
+# if [ -f $BASERVER_HOME/.baserver_configured ]; then
    cd $BASERVER_HOME
-   sudo -u pentaho ./start-pentaho.sh
-fi;
+   s6-setuidgid pentaho ./start-pentaho.sh
+# fi;

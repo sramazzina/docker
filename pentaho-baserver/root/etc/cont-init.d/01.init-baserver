@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv sh
 
+: <<'COMMENTED'
 echo "BASERVER_HOME: $BASERVER_HOME"
 
 STANDALONE=${IS_STANDALONE:-"Y"}
@@ -30,3 +31,5 @@ if [ ! -f $BASERVER_HOME/.baserver_configured ]; then
    fi;
    sudo -u pentaho touch $BASERVER_HOME/.baserver_configured
 fi;
+
+COMMENTED
