@@ -8,10 +8,15 @@ ENV S6_VER=v1.22.1.0
 # - https://github.com/just-containers/s6-overlay
 # - http://www.greg-gilbert.com/2017/05/basic-setup-for-s6-and-s6-overlay-in-docker/
 
+COPY tools/start.sh /start.sh
+
 RUN apt-get update && \
     apt-get install -y zip unzip curl pwgen && \ 
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    apt-get purge -y --auto-remove && \
     curl -sSL https://github.com/just-containers/s6-overlay/releases/download/${S6_VER}/s6-overlay-amd64.tar.gz | tar xfz - -C / && \
-    rm -rf /var/lib/apt/lists/*
+    chmod +x /start.sh
 
-
+ENTRYPOINT [ "/start.sh" ]
 
