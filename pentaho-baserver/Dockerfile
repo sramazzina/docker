@@ -1,7 +1,7 @@
 
 # Serasoft's docker image for Pentaho Business Analytics
 #
-# VERSION 2.1
+# VERSION 2.2
 #
 
 FROM serasoft/openjdk-base:v8

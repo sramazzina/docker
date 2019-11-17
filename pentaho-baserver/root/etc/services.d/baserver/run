@@ -2,5 +2,5 @@
 
 # if [ -f $BASERVER_HOME/.baserver_configured ]; then
    cd $BASERVER_HOME
-   s6-setuidgid pentaho ./start-pentaho.sh
+   sudo -u pentaho ./start-pentaho.sh
 # fi;

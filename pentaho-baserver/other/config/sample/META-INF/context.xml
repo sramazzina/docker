@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/pentaho" docbase="webapps/pentaho/">
+
+	<Resource name="jdbc/Hibernate" auth="Container" type="javax.sql.DataSource" 
+		factory="org.apache.commons.dbcp.BasicDataSourceFactory" maxactive="20" maxidle="5" 
+		maxwait="10000" username="hibuser" password="password" 
+		driverclassname="org.postgresql.Driver" url="jdbc:postgresql://localhost/hibernate" validationquery="select 1"/>
+
+	<Resource name="jdbc/Audit" auth="Container" type="javax.sql.DataSource" 
+		factory="org.apache.commons.dbcp.BasicDataSourceFactory" maxactive="20" maxidle="5" 
+		maxwait="10000" username="hibuser" password="password" 
+		driverclassname="org.postgresql.Driver" url="jdbc:postgresql://localhost/hibernate" validationquery="select 1"/>
+
+	<Resource name="jdbc/Quartz" auth="Container" type="javax.sql.DataSource" 
+		factory="org.apache.commons.dbcp.BasicDataSourceFactory" maxactive="20" maxidle="5" 
+		maxwait="10000" username="pentaho_user" password="password" 
+		driverclassname="org.postgresql.Driver" url="jdbc:postgresql://localhost/quartz" validationquery="select 1"/>
+
+	<Resource name="jdbc/pentaho_operations_mart" auth="Container" type="javax.sql.DataSource" 
+		factory="org.apache.commons.dbcp.BasicDataSourceFactory" maxactive="20" maxidle="5" 
+		maxwait="10000" username="hibuser" password="password" 
+		driverclassname="org.postgresql.Driver" url="jdbc:postgresql://localhost/pentaho_operations_mart" validationquery="select 1"/>
+
+	<Resource name="jdbc/PDI_Operations_Mart" auth="Container" type="javax.sql.DataSource" 
+		factory="org.apache.commons.dbcp.BasicDataSourceFactory" maxactive="20" maxidle="5" 
+		maxwait="10000" username="hibuser" password="password" 
+		driverclassname="org.postgresql.Driver" url="jdbc:postgresql://localhost/hibernate" validationquery="select 1"/>
+</Context>
