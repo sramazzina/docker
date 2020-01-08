@@ -39,6 +39,7 @@ COPY ./dist/pdi-ce-${PDI_REL}.zip ${PENTAHO_HOME}
 RUN unzip ${PENTAHO_HOME}/pdi-ce-${PDI_REL}.zip -d ${PENTAHO_HOME}  && \
     rm ${PENTAHO_HOME}/pdi-ce-${PDI_REL}.zip && \
     rm ${PDI_HOME}/lib/log4j-1.2.14.jar && \
+    rm -Rf ${PDI_HOME}/plugins/pentaho-big-data-plugin && \
     mkdir -p ${KETTLE_PROPERTIES_PATH} && \
     ln -s ${DATA_VOLUME} /data-volume && \
     ln -s ${SCRIPT_VOLUME} /etl-scripts && \
