@@ -1,0 +1,11 @@
+FROM serasoft/alpine:3.14
+MAINTAINER Sergio Ramazzina - sergio.ramazzina@serasoft.it
+
+# Default to UTF-8 file.encoding
+ENV LANG=C.UTF-8 \
+    JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk \
+    PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH
+
+RUN   apk update && \
+      apk add --no-cache openjdk8=8.282.08-r1 && \
+      rm -rf /var/cache/apk/* 

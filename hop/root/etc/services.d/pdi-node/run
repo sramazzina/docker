@@ -1,0 +1,8 @@
+#!/usr/bin/with-contenv sh
+
+# if [ -f $PDI_HOME/.pdi_is_carte_server ]; then
+#   cd $PDI_HOME
+#   exec s6-setuidgid pentaho ./carte.sh ./config/carte-config.xml
+#
+# fi;
+
