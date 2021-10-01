@@ -1,2 +1,0 @@
-#!/usr/bin/with-contenv sh
-$SCHEDULER_HOME/jetty/bin/jetty.sh run
