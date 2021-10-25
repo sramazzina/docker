@@ -49,9 +49,9 @@ ENV HOP_OPTIONS=-XX:+AggressiveHeap
 ENV HOP_HOME=$DEPLOYMENT_PATH/hop
 
 # Serasoft specific dirs and settings
-ENV DATA_VOLUME ${DEPLOYMENT_PATH}/data-volume
-ENV SCRIPT_VOLUME ${DEPLOYMENT_PATH}/etl-scripts
-ENV LOG_VOLUME ${DEPLOYMENT_PATH}/etl-logs
+ENV DATA_VOLUME ${DEPLOYMENT_PATH}/data_volume
+ENV SCRIPT_VOLUME ${DEPLOYMENT_PATH}/etl_scripts
+ENV LOG_VOLUME ${DEPLOYMENT_PATH}/etl_logs
 
 # Define it_IT.
 ENV LANGUAGE it_IT.UTF-8
@@ -81,9 +81,9 @@ COPY --chown=hop:hop ./dist/hop-client-${HOP_REL}.zip ${DEPLOYMENT_PATH}
 
 RUN unzip ${DEPLOYMENT_PATH}/hop-client-${HOP_REL}.zip -d ${DEPLOYMENT_PATH}  && \
     rm ${DEPLOYMENT_PATH}/hop-client-${HOP_REL}.zip && \
-    ln -s ${DATA_VOLUME} /data-volume && \
-    ln -s ${SCRIPT_VOLUME} /etl-scripts && \
-    ln -s ${LOG_VOLUME} /etl-logs && \
+    ln -s ${DATA_VOLUME} /data_volume && \
+    ln -s ${SCRIPT_VOLUME} /etl_scripts && \
+    ln -s ${LOG_VOLUME} /etl_logs && \
     ln -s ${HOP_HOME} /hop && \
     chown hop:hop -Rf ${DEPLOYMENT_PATH} && \
     chown hop:hop ${DATA_VOLUME} && \
