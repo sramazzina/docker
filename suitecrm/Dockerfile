@@ -35,4 +35,4 @@ RUN cd /var/www/localhost/htdocs/suitecrm \
   && chmod -R 775 cache custom modules themes data upload \
   && rm /var/www/localhost/htdocs/index.html
 
-EXPOSE 80
+EXPOSE 80 443
